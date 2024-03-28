@@ -1,0 +1,101 @@
+﻿@model List<JoesPizza.Models.Pizza>
+@{
+    ViewData["Title"] = "Menu";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="mb-3 text-end">
+            <button class="btn mr-2 cart-btn"><a asp-controller="Order" asp-action="OrderCheckout">Checkout</a> <i class="bi bi-bag-check-fill"></i></button>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pizza</th>
+                            <th>Price (&#8377;)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var pizza in Model)
+                        {
+                            <tr>
+                                <form method="post" asp-controller="Order" asp-action="AddToBag">
+                                <td>@Html.DisplayFor(modelItem => pizza.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => pizza.Price)</td>
+                                <td>
+                                    <input type="hidden" name="pizzaId" value="@pizza.Id" />
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-sm btn-add">Add to Bag</button>
+                                    </div>
+                                </td>
+                                </form>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .cart-btn {
+        font-size: 14px;
+        background-color: rgb(150, 20, 20);
+        box-shadow: 2px 2px 4px rgb(150, 20, 20);
+        color: black;
+    }
+
+        .cart-btn a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .cart-btn:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: rgb(150, 20, 20);
+            box-shadow: 2px 2px 4px rgb(150, 20, 20);
+        }
+
+            .cart-btn:hover a {
+                color: rgb(150, 20, 20);
+            }
+
+    .table {
+        font-size: 15px;
+        color: rgb(200, 200, 200);
+    }
+
+    .btn-add {
+        background-color: rgba(0, 0, 0, 0.6);
+        font-size: 12px;
+        color: rgb(150, 20, 20);
+        box-shadow: 2px 2px 3px rgb(150, 20, 20);
+    }
+
+        .btn-add:hover {
+            background-color: rgb(150, 20, 20);
+            color: black;
+        }
+
+    .table {
+        border: none;
+        font-size: 15px;
+    }
+
+        .table th, .table td {
+            border-bottom: 1px solid rgb(70, 70, 70);
+        }
+
+    .btn-add:focus, .btn-add:active {
+        box-shadow: none;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+    }
+</style>

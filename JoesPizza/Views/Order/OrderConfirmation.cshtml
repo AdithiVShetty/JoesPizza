@@ -1,0 +1,100 @@
+﻿@model JoesPizza.Models.Order
+
+<div class="container confirmation-container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="order-confirm well text-center">
+                <i class="bi bi-check-circle-fill confirmation-icon"></i>
+                <h2 class="confirmation-title">Order Placed Successfully!</h2>
+                <p class="confirmation-info det">
+                    Order ID: <span>@Model.Id</span>
+                </p>
+                @* <h4>Your Order</h4> *@
+                <ul>
+                    @foreach (var item in Model.Items)
+                    {
+                        <li>
+                            @item.Pizza.Name - Quantity: @item.Quantity - Price: $@(item.Pizza.Price * item.Quantity)
+                        </li>
+                    }
+                </ul>
+
+                <h5>Total Price: &#8377; @Model.TotalPrice</h5>
+                <div class="confirmation-info">
+                    Thank you for your order.
+                </div>
+                <div class="confirmation-info">
+                    Your pizza will be delivered soon.
+                </div>
+                <a class="btn btn-back-home" asp-area="" asp-controller="Order" asp-action="PizzaSelection">Back to Menu</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .order-confirm {
+        margin-top: 10px;
+        padding: 30px 0;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .confirmation-icon {
+        font-size: 60px;
+        color: rgb(150, 20, 20);
+        margin-bottom: 20px;
+    }
+
+    .confirmation-title {
+        font-size: 24px;
+        color: rgb(150, 20, 20);
+        margin-bottom: 8px;
+    }
+
+    .confirmation-info {
+        font-size: 18px;
+        color: #99a3ab;
+        margin-bottom: 5px;
+    }
+
+        .confirmation-info span {
+            font-weight: bold;
+            color: #495057;
+        }
+
+    .det-on {
+        font-size: 15px;
+        margin-bottom: 2px;
+    }
+
+    .det {
+        font-size: 15px;
+        color: #6c757d;
+        margin-bottom: 9px;
+    }
+
+    .btn-back-home {
+        font-size: 15px;
+        background-color: rgb(150, 20, 20);
+        box-shadow: 2px 2px 4px rgb(150, 20, 20);
+        color: black;
+        border: none;
+        border-radius: 5px;
+        padding: 7px 14px;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+
+        .btn-back-home:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: rgb(150, 20, 20);
+            box-shadow: 2px 2px 4px rgb(150, 20, 20);
+        }
+
+        .btn-back-home:focus {
+            outline: none;
+            box-shadow: none;
+        }
+</style>

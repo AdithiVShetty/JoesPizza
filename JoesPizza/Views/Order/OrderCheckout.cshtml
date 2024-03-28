@@ -1,0 +1,163 @@
+﻿@model List<JoesPizza.Models.OrderItem>
+@{
+    ViewData["Title"] = "Checkout";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pizza</th>
+                            <th>Price (&#8377;)</th>
+                            <th>Quantity</th>
+                            <th>Total Price (&#8377;)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Pizza.Name</td>
+                                <td>&#8377; @item.Pizza.Price</td>
+                                <td>
+                                    <form method="post" action="@Url.Action("UpdateQuantity", "Order")">
+                                        <input type="hidden" name="pizzaId" value="@item.Pizza.Id" />
+                                        <input type="number" name="quantity" value="@item.Quantity" min="1" />
+                                        <button type="submit" class="btn btn-update"><i class="bi bi-pencil-square"></i></button>
+                                    </form>
+                                </td>
+                                <td>&#8377; @(item.Pizza.Price * item.Quantity)</td>
+                                <td>
+                                    <form asp-action="RemoveItem" asp-controller="Order" method="post">
+                                        <input type="hidden" name="pizzaId" value="@item.Pizza.Id" />
+                                        <button type="submit" class="btn remove-btn text-end"><i class="bi bi-trash-fill remove"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <p class="total-price">Total Price: &#8377; @Model.Sum(item => item.Pizza.Price * item.Quantity)</p>
+                <form asp-action="PlaceOrder" asp-controller="Order" method="post">
+                    <button type="submit" class="btn mr-2 cart-btn">Place Order <i class="bi bi-arrow-right-square-fill"></i></button>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="empty-box">
+                    <i class="bi bi-bag-x-fill empty-cart"></i>
+                    <p class="text-muted">Oops! There are no items to checkout.</p>
+                    <a class="btn cart-btn" asp-area="" asp-controller="Order" asp-action="PizzaSelection">Back to Menu</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .cart-btn {
+        font-size: 14px;
+        background-color: rgb(150, 20, 20);
+        box-shadow: 2px 2px 4px rgb(150, 20, 20);
+        color: black;
+    }
+
+        .cart-btn:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: rgb(150, 20, 20);
+            box-shadow: 2px 2px 4px rgb(150, 20, 20);
+        }
+
+    .remove {
+        font-size: 18px;
+    }
+
+        .remove:hover {
+            color: rgb(150, 20, 20);
+        }
+
+    .remove-btn {
+        background-color: transparent;
+        border: none;
+        outline: none;
+    }
+
+    .table {
+        font-size: 15px;
+        color: rgb(200, 200, 200);
+    }
+
+    .btn-update {
+        background-color: transparent;
+        color: rgb(220, 220, 220);
+        font-size: 18px;
+        margin-top: -3px;
+    }
+
+        .btn-update:hover {
+            color: rgb(150, 20, 20);
+            box-shadow: none;
+        }
+
+    .table {
+        border: none;
+        font-size: 15px;
+    }
+
+        .table th, .table td {
+            border-bottom: 1px solid rgb(70, 70, 70);
+        }
+
+    .total-price {
+        font-size: 20px;
+    }
+
+    input {
+        font-size: 14px;
+        background-color: rgba(20, 20, 20);
+        color: rgb(220, 220, 220);
+        box-shadow: none;
+        border: none;
+        outline: none;
+        border-radius: 3px;
+        padding: 2px 0 2px 8px;
+    }
+
+        input:focus {
+            box-shadow: none;
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            border-bottom: 4px solid rgb(150, 20, 20);
+        }
+
+    .empty-box {
+        background-color: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        border: none;
+        color: rgb(150, 20, 20);
+        padding: 40px 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+        .empty-box p {
+            font-size: 20px;
+        }
+
+    .empty-cart {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+</style>

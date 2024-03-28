@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="home container text-center mt-5">
+    <h1>Welcome to Joe's Pizza</h1>
+    <p>Discover a slice of perfection!</p>
+    <a class="btn btn-order-now" asp-area="" asp-controller="Order" asp-action="PizzaSelection">Order Now</a>
+</div>
+
+<style>
+
+    .home h1 {
+        color: rgb(150, 20, 20);
+        margin-bottom: 8px;
+        font-size: 45px;
+    }
+
+    .home p {
+        font-size: 18px;
+        color: rgb(150, 150, 150);
+        margin-bottom: 24px;
+    }
+
+    .btn-order-now {
+        background-color: rgb(150, 20, 20);
+        color: rgb(200, 200, 200);
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-order-now:hover {
+            background-color: rgba(150, 20, 20, 0.8);
+            color: rgb(200, 200, 200);
+        }
+
+        .btn-order-now:active {
+            box-shadow: none;
+            border: none;
+        }
+</style>
